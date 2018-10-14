@@ -14,6 +14,13 @@ class Bicycle
   def default_tire_size
     raise NotImplementedError, "this #{self.class} cannot respond to:"
   end
+
+  def spares
+    {
+      chain: chain,
+      tire_size: tire_size
+    }
+  end
 end
 
 class RoadBike < Bicycle
@@ -27,7 +34,7 @@ class RoadBike < Bicycle
   def default_tire_size
     '23'
   end
-
+  
   def spares
     super.merge(tape_color: tape_color)
   end
@@ -54,21 +61,32 @@ class MountainBike < Bicycle
 end
 
 class RecumbentBike < Bicycle
+  attr_reader :flag
+
+  def initialize(args)
+    @flag = args[:flag]
+  end
+
+  def default_tire_size
+    '28'
+  end
+
+  def spares
+    super.merge(flag: flag)
+  end
 end
 
-recumbentBike = RecumbentBike.new
+roadBike = RoadBike.new(
+  size: 'M',
+  tape_color: 'red')
 
-# roadBike = RoadBike.new(
-#   size: 'M',
-#   tape_color: 'red')
+mountainBike = MountainBike.new(
+  size: 'S',
+  front_shock: 'Manitou',
+  rear_shork: 'Fox')
+bent = RecumbentBike.new(flag: 'tall Orange')
 
-# mountainBike = MountainBike.new(
-#   size: 'S',
-#   front_shock: 'Manitou',
-#   rear_shork: 'Fox')
 
-# puts(roadBike.tire_size)
-# puts(roadBike.chain)
-
-# puts(mountainBike.tire_size)
-# puts(mountainBike.chain)
+puts(roadBike.spares)
+puts(mountainBike.spares)
+puts(bent.spares)

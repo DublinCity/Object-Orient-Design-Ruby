@@ -16,11 +16,19 @@ class Bicycle
     raise NotImplementedError, "this #{self.class} cannot respond to:"
   end
 
+  def post_initialize(args)
+    nil
+  end
+
   def spares
     {
       chain: chain,
       tire_size: tire_size
-  }.merge(local_spares)
+    }.merge(local_spares)
+  end
+
+  def local_spares
+    {}
   end
 end
 
@@ -91,7 +99,6 @@ mountainBike = MountainBike.new(
   front_shock: 'Manitou',
   rear_shork: 'Fox')
 bent = RecumbentBike.new(flag: 'tall Orange')
-
 
 puts(roadBike.spares)
 puts(mountainBike.spares)

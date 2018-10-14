@@ -15,9 +15,23 @@ class Bicycle
     end
 end
 
-bike = Bicycle.new(
-  size: 'M',
-  tape_color: 'red')
+class MountainBike < Bicycle
+    attr_reader :front_shock, :rear_shork
 
-puts(bike.size)
-puts(bike.spares)
+    def initialize(args)
+      @front_shock = args[:front_shock]
+      @rear_shork = args[:rear_shork]
+      super(args)
+    end
+
+    def spares
+      super.merge(rear_shork: rear_shork)
+    end
+end
+
+mountainBike = MountainBike.new(
+  size: 'S',
+  front_shock: 'Manitou',
+  rear_shork: 'Fox')
+
+puts(mountainBike.spares)
